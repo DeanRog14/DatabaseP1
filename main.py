@@ -41,14 +41,14 @@ def add_data(file_path):
 
     new_data = {
         "PARTKEY" : partkey,
-        "NAME" : name,
-        "MFGR" : mfgr, 
-        "BRAND" : brand, 
-        "TYPE" : part_type, 
+        "NAME" : name.strip(),
+        "MFGR" : mfgr.strip(), 
+        "BRAND" : brand.strip(), 
+        "TYPE" : part_type.strip(), 
         "SIZE" : size, 
-        "CONTAINER" : container, 
+        "CONTAINER" : container.strip(), 
         "RETAILPRICE" : retailprice, 
-        "COMMENT" : comment
+        "COMMENT" : comment.strip()
     }
 
     new_row = pd.DataFrame([new_data])
@@ -68,7 +68,7 @@ def main():
     print("3. Update a part")
     print("4. Delete a part")
     print("-1 to exit the program")
-    choice = input("what would you like to do to the table?: ")
+    choice = int(input("what would you like to do to the table?: "))
 
     while choice != -1: 
         if(choice == 1): 
@@ -79,7 +79,7 @@ def main():
             print("you are updating a part")
         elif(choice == 4): 
             print("you are deleting a part")
-        
+        choice = int(input("what would you like to do to the table?: "))
     # print(parts_dict)
     # print(data)
 
