@@ -45,13 +45,35 @@
     },
     {
         "PARTKEY": 5,
-        "NAME": "forest brown coral puff cream",
-        "MFGR": "Manufacturer#3",
-        "BRAND": "Brand#32",
-        "TYPE": "STANDARD POLISHED TIN",
-        "SIZE": 15,
-        "CONTAINER": "SM PKG",
-        "RETAILPRICE": 905.0,
-        "COMMENT": " wake carefully "
+        "NAME": "dkfsj",
+        "MFGR": "sdflsdjf",
+        "BRAND": "dsflksdjf",
+        "TYPE": "dsflksdjf",
+        "SIZE": 10,
+        "CONTAINER": "kfdjs",
+        "RETAILPRICE": 10.0,
+        "COMMENT": "dklf"
+    },
+    {
+        "PARTKEY": 6,
+        "NAME": "matthew",
+        "MFGR": "matthew",
+        "BRAND": "matthew",
+        "TYPE": "matthew",
+        "SIZE": 100,
+        "CONTAINER": "large",
+        "RETAILPRICE": 1000000.0,
+        "COMMENT": "matthew"
+    },
+    {
+        "PARTKEY": 7,
+        "NAME": "matthew",
+        "MFGR": "matthew",
+        "BRAND": "amtthew",
+        "TYPE": "mthew",
+        "SIZE": 10,
+        "CONTAINER": "dsf",
+        "RETAILPRICE": 10.0,
+        "COMMENT": "kldfj"
     }
 ]
