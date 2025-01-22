@@ -63,14 +63,16 @@ def add_data(file_path):
         "SIZE" : size, 
         "CONTAINER" : container, 
         "RETAILPRICE" : retailprice, 
-        "COMMENT" : comment,
+        "COMMENT" : comment
     } 
 
     new_row = pd.DataFrame([new_data])
 
-    updated_tbl = pd.concat([data, new_row], ignore_index = True)
+    # updated_tbl = pd.concat([data, new_row], ignore_index = True)
 
-    updated_tbl.to_csv(file_path, sep="|", index=False, header=False, mode="a", lineterminator="|\n")
+    # updated_tbl.to_csv(file_path, sep="|", index=False, header=False, mode ="a", lineterminator="|\n")
+
+    new_row.to_csv(file_path, sep="|", index=False, header=False, mode ="a", lineterminator="|\n")
        
     print(f"New data added successfully: \n{new_data}")
 

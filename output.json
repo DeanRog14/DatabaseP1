@@ -53,5 +53,16 @@
         "CONTAINER": "SM PKG",
         "RETAILPRICE": 905.0,
         "COMMENT": " wake carefully "
+    },
+    {
+        "PARTKEY": 6,
+        "NAME": "afadf",
+        "MFGR": "fadf",
+        "BRAND": "fadfad",
+        "TYPE": "afda",
+        "SIZE": 10,
+        "CONTAINER": "dafa",
+        "RETAILPRICE": 100.0,
+        "COMMENT": "adf"
     }
 ]
