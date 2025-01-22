@@ -196,7 +196,7 @@ def update_data(file_path, parts):
 
 
 def main(): 
-    data_file = "part2.tbl"
+    data_file = "part.tbl"
     
     parts = create_data(data_file)
 
