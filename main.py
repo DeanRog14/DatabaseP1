@@ -56,16 +56,33 @@ def authenication(file_path):
     return data
 ## returns dataframe
 
-def add_data(file_path): 
+def add_data(file_path,parts): 
 
-    partkey = int(input("What is the partkey for the part you would like to add?: "))
+    existing_partkeys = [item["PARTKEY"] for item in parts]
+    try: 
+        partkey = int(input("What is the partkey for the part you would like to add?: "))
+    except ValueError:
+        print("Error: use a integer. try again.")
+        return
+
+    if partkey in existing_partkeys:
+        print(f"Error: A part with PARTKEY {partkey} already exists. Please use a different PARTKEY.")
+        return
     name = input("What is the name for the part you would like to add?: ")
     mfgr = input("Who is the manufacturer for the part?: ")
     brand = input("What is the brand for the part you would like to add?: ")
     part_type = input("What is the type for the part you would like to add?: ")
-    size = int(input("What is the size of the part you would like to add?: "))
+    try: 
+        size = int(input("What is the size of the part you would like to add?: "))
+    except ValueError:
+        print("Error: use a integer. try again.")
+        return
     container = input("What is the container for the part you would like to add?: ")
-    retailprice = float(input("What is the retail price for the part you would like to add?: "))
+    try:
+        retailprice = float(input("What is the retail price for the part you would like to add?: "))
+    except ValueError:
+        print("Error: use a float. Try again.")
+        return
     comment = input("Any comments for the part?: ")
     
     
@@ -188,7 +205,7 @@ def main():
 
     while choice != -1: 
         if(choice == 1): 
-            add_data(data_file)
+            add_data(data_file, parts)
             parts = create_data(data_file)
             
         elif(choice == 2): 
