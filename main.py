@@ -4,6 +4,16 @@ import json
 import os
 
 
+def choices():
+    print()
+    print()
+    print("Actions able to be done to the table: ")
+    print("1. Insert new part")
+    print("2. Search for a part")
+    print("3. Update a part")
+    print("4. Delete a part")
+    print("-1 to exit the program")
+    print()
 
 def create_data(file_path): 
     # creates the file path to find the file in the folders 
@@ -25,6 +35,7 @@ def create_data(file_path):
     #     lines = f.readlines()
     # for i, line in enumerate(lines[:10]):  # Print first 10 lines
     #     print(f"Line {i+1}: {line}")
+    # returns dictionary
     return parts_dict
     
 def authenication(file_path): 
@@ -39,6 +50,7 @@ def authenication(file_path):
         print(f"File is empty. Returning an empty table.")
         data = pd.DataFrame(columns=columns)
     return data
+## returns dataframe
 
 def add_data(file_path): 
     data = authenication(file_path)
@@ -50,7 +62,7 @@ def add_data(file_path):
     part_type = input("What is the type for the part you would like to add?: ")
     size = int(input("What is the size of the part you would like to add?: "))
     container = input("What is the container for the part you would like to add?: ")
-    retailprice = int(input("What is the retail price for the part you would like to add?: "))
+    retailprice = float(input("What is the retail price for the part you would like to add?: "))
     comment = input("Any comments for the part?: ")
     
     
@@ -68,60 +80,81 @@ def add_data(file_path):
 
     new_row = pd.DataFrame([new_data])
 
-    # updated_tbl = pd.concat([data, new_row], ignore_index = True)
-
-    # updated_tbl.to_csv(file_path, sep="|", index=False, header=False, mode ="a", lineterminator="|\n")
-
     new_row.to_csv(file_path, sep="|", index=False, header=False, mode ="a", lineterminator="|\n")
-       
+    
     print(f"New data added successfully: \n{new_data}")
 
 
 
 
 
-def search_data(file_path): 
-    data = authenication(file_path)
+def search_data(parts): 
 
+    keys = input("What atrribute would you like to use for your search?(PARTKEY, NAME, MFGR, BRAND, TYPE, SIZE, CONTAINER, RETAILPRICE, COMMENT)!(IF DELETING A PART CHOOSE PARTKEY)!: ").strip().upper()
 
-    key = input("What atrribute would you like to use for your search?(PARTKEY, NAME, MFGR, BRAND, TYPE, SIZE, CONTAINER, RETAILPRICE, COMMENT): ").strip().upper()
-
-    if key not in data.columns:
-        print(f"Invalid attribute '{key}' entered.")
+    if keys not in ["PARTKEY", "NAME", "MFGR", "BRAND", "TYPE", "SIZE", "CONTAINER", "RETAILPRICE", "COMMENT"]:
+        print(f"Invalid attribute '{keys}'. Please try again.")
         return
     
-    search_value = input(f"Enter the value you want to search by: ")
+    if(keys == "PARTKEY" or keys == "SIZE"):
+        try:
+            values = int(input(f"What value were you looking for in '{keys}'?: "))
+        except ValueError:
+            print("Invalid input. Please enter a valid integer.")
+            return
+    elif(keys == "RETAILPRICE"):
+        try:
+            values = float(input(f"What value were you looking for in '{keys}'?: "))
+        except ValueError:
+            print("Invalid input. Please enter a valid float.")
+            return
+    else: 
+        values = input(f"What value were you looking for in '{keys}'?: ").strip().lower()
 
-    search_results = data[data[key]].str.contrains(search_value, case = False, na=False)
+    
+    macthes_found = False
+    for item in parts: 
+        
+        if item.get(keys, "") == values:
+            print(item)
+            macthes_found = True
+            return item
+        
+    if not macthes_found:
+        print(f"No macthes found for '{values}' in column '{keys}'")
+        return "try again"
+    
+def delete_data(file_path, parts):
+    data = authenication(file_path)
+    
+    item = search_data(parts)
+    
+    question = input("Are you sure you would like to delete this item?(Y/N): ").lower()
 
-    if not search_results.empty:
-        print(f"\nSearch Results for '{search_value}' in {key}:")
-        print(search_results)
+    if question == "y": 
+        parts.remove(item)
     else:
-        print(f"No results found for '{search_value}' in {key}.")
+        return
 
 
 def main(): 
-    data_file = "/Users/matthewdevaney/Downloads/part2.tbl"
+    data_file = "part2.tbl"
+    
     parts = create_data(data_file)
 
-    print("Actions able to be done to the table: ")
-    print("1. Insert new part")
-    print("2. Search for a part")
-    print("3. Update a part")
-    print("4. Delete a part")
-    print("-1 to exit the program")
+    choices()
     choice = int(input("what would you like to do to the table?: "))
 
     while choice != -1: 
         if(choice == 1): 
             add_data(data_file)
         elif(choice == 2): 
-            search_data(data_file)
+            search_data(parts)
         elif(choice == 3):
             print("you are updating a part")
         elif(choice == 4): 
-            print("you are deleting a part")
+            delete_data(data_file, parts)
+        choices()
         choice = int(input("what would you like to do to the table?: "))
     
     
