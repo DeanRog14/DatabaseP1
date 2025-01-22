@@ -91,11 +91,11 @@ def add_data(file_path):
 def search_data(parts): 
 
     keys = input("What atrribute would you like to use for your search?(PARTKEY, NAME, MFGR, BRAND, TYPE, SIZE, CONTAINER, RETAILPRICE, COMMENT)!(IF DELETING A PART CHOOSE PARTKEY)!: ").strip().upper()
-
+    print()
     if keys not in ["PARTKEY", "NAME", "MFGR", "BRAND", "TYPE", "SIZE", "CONTAINER", "RETAILPRICE", "COMMENT"]:
         print(f"Invalid attribute '{keys}'. Please try again.")
         return
-    
+    print()
     if(keys == "PARTKEY" or keys == "SIZE"):
         try:
             values = int(input(f"What value were you looking for in '{keys}'?: "))
@@ -116,13 +116,14 @@ def search_data(parts):
     for item in parts: 
         
         if item.get(keys, "") == values:
+            print()
             print(item)
             macthes_found = True
             return item
         
     if not macthes_found:
         print(f"No macthes found for '{values}' in column '{keys}'")
-        return "try again"
+        return None
     
 def delete_data(file_path, parts):
     data = authenication(file_path)
@@ -133,8 +134,14 @@ def delete_data(file_path, parts):
 
     if question == "y": 
         parts.remove(item)
+    elif question == "n":
+        return None
     else:
-        return
+        print("Not a valid answer.")
+
+    updated_df = pd.DataFrame(parts)
+    updated_df.to_csv(file_path, sep="|", index=False, header=False, lineterminator= "|\n")
+    print(f"Item deleted successfully. Updated data saved to {file_path}.")
 
 
 def main(): 
@@ -148,12 +155,15 @@ def main():
     while choice != -1: 
         if(choice == 1): 
             add_data(data_file)
+            parts = create_data(data_file)
         elif(choice == 2): 
             search_data(parts)
         elif(choice == 3):
             print("you are updating a part")
+            parts = create_data(data_file)
         elif(choice == 4): 
             delete_data(data_file, parts)
+            parts = create_data(data_file)
         choices()
         choice = int(input("what would you like to do to the table?: "))
     
